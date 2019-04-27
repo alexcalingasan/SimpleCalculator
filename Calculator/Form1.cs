@@ -83,62 +83,59 @@ namespace Calculator
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            total = (operation == Operation.None) ? double.Parse(txtDisplay.Text) : total + double.Parse(txtDisplay.Text);
+            total = Compute();
             operation = Operation.Addition;
-            txtDisplay.Clear();
         }
 
         private void BtnSubtract_Click(object sender, EventArgs e)
         {
-            total = (operation == Operation.None) ? double.Parse(txtDisplay.Text) : total - double.Parse(txtDisplay.Text);
+            total = Compute();
             operation = Operation.Subtraction;
-            txtDisplay.Clear();
         }
 
         private void BtnMultiply_Click(object sender, EventArgs e)
         {
-            total = (operation == Operation.None) ? double.Parse(txtDisplay.Text) : total * double.Parse(txtDisplay.Text);
+            total = Compute();
             operation = Operation.Multiplication;
-            txtDisplay.Clear();
         }
 
         private void BtnDivide_Click(object sender, EventArgs e)
         {
-            total = (operation == Operation.None) ? double.Parse(txtDisplay.Text) : total / double.Parse(txtDisplay.Text);
+            total = Compute();
             operation = Operation.Division;
-            txtDisplay.Clear();
         }
 
         private void BtnEqual_Click(object sender, EventArgs e)
         {
-            if(operation == Operation.Addition)
+            if(operation != Operation.None)
             {
-                double result = total + double.Parse(txtDisplay.Text);
-                txtDisplay.Text = result.ToString();
+                txtDisplay.Text = Compute().ToString();
                 operation = Operation.None;
                 total = 0;
             }
-            else if(operation == Operation.Subtraction)
+        }
+
+        private double Compute()
+        {
+            double result = double.Parse(txtDisplay.Text);
+            if (operation == Operation.Addition)
             {
-                double result = total - double.Parse(txtDisplay.Text);
-                txtDisplay.Text = result.ToString();
-                operation = Operation.None;
-                total = 0;
+                result = total + double.Parse(txtDisplay.Text);
+            }
+            else if (operation == Operation.Subtraction)
+            {
+                result = total - double.Parse(txtDisplay.Text);
             }
             else if (operation == Operation.Multiplication)
             {
-                double result = total * double.Parse(txtDisplay.Text);
-                txtDisplay.Text = result.ToString();
-                operation = Operation.None;
-                total = 0;
+                result = total * double.Parse(txtDisplay.Text);
             }
             else if (operation == Operation.Division)
             {
-                double result = total / double.Parse(txtDisplay.Text);
-                txtDisplay.Text = result.ToString();
-                operation = Operation.None;
-                total = 0;
+                result = total / double.Parse(txtDisplay.Text);
             }
+            txtDisplay.Clear();
+            return result;
         }
     }
 }
